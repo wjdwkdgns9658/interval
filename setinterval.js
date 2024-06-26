@@ -17,29 +17,36 @@
 //     document.querySelector("#bannerimg").setAttribute("src",`/banner/${count}.png`)
 // },1000);
 
-const bannerdata = [
+const bannerData = [
     "/banner2/1.png",
     "/banner/0.png",
     "/banner2/membership.png"
 ];
 
-//같은 변수 
 let num = 0;
-document.querySelector("#bannerimg").setAttribute("src",bannerdata[num])
 
-document.querySelector(".bannerwrap").style.background =`
-                           url(${bannerdata[num]}) center no-repeat`;
+const bannerWrap = document.querySelector(".bannerwrap");
+const bannerImg = document.querySelector("#bannerimg");
+const bannerButton = document.querySelector(".bannerwrap button");
 
-const autoBanner =  setInterval(function(){
-    num++;
-    num %= bannerdata.length;
-    document.querySelector(".bannerwrap").style.background =`url(${bannerdata[num]}) center no-repeat`;
-    document.querySelector("#bannerimg").setAttribute("src",bannerdata[num]) 
-}, 3000)
+function updateBanner() {
+    bannerWrap.style.background = `url(${bannerData[num]}) center no-repeat`;
+    bannerImg.setAttribute("src", bannerData[num]);
+}
 
+function startAutoBanner() {
+    return setInterval(function() {
+        num = (num + 1) % bannerData.length;
+        updateBanner();
+    }, 3000);
+}
 
+let autoBanner = startAutoBanner();
 
-document.querySelector(".bannerwrap  button").addEventListener('click', function(){
+bannerButton.addEventListener('click', function() {
     clearInterval(autoBanner);
-    this.innerHTML = "PLAY";
-})
+    bannerButton.innerHTML = "PLAY";
+});
+
+// 초기 배너 설정
+updateBanner();
