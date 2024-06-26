@@ -38,7 +38,7 @@ function startAutoBanner() {
     return setInterval(function() {
         num = (num + 1) % bannerData.length;
         updateBanner();
-    }, 3000);
+    }, 3000);w
 }
 
 let autoBanner = startAutoBanner();
